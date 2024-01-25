@@ -1,0 +1,127 @@
+openapi: '3.1.0'
+info:
+  title: 'One-time Password Service'
+  description: 'One time password service built in Goglang that uses redis for keystore and can get user information from mongo or postgres.'
+  version: '1.0.0'
+servers:
+  - url: 'localhost:5512'
+paths:
+  /otp:
+    post:
+      summary: create a new otp session
+      operationId: createOTPSession
+      parameters:
+        - name: scenario
+          in: query
+          description: 'create a new session given the scenario'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Successfully created an OTP session'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OTPSession'
+        '404':
+          description: 'So such scenario exists'   
+  /otp/{id}/sendotp:
+    post:
+      summary: 'send OTP to the chosen destination'
+      operationId: sendOTP
+      parameters:
+        - id:
+          in: query
+          required: true
+          $ref: '#/components/parameters/id'
+        - name: ch
+          in: query
+          description: 'which of the channels on which to send the OTP.'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 'This channelValue is needed if the selected channel requires user to provide the full channel string such as email or phone for verification. This value must correspond to the ID of the channel passed in the query parameter.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChannelValue'
+      responses:
+        '200':
+          description: 'OTP successfully sent'
+        '404':
+          description: 'Invalid session'
+        '500':
+          description: 'Catch-all other errors'
+  /otp/{id}/validate:
+    post:
+      summary: 'given the code, validate the OTP received by the user'
+      operationId: vailidateOTP
+      parameters:
+        - id:
+          in: query
+          required: true
+          $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: 'Validation of OTP successful'
+        '404':
+          description: 'Invalid OTP/Invalid session'
+        '500':
+          description: 'Catch-all other errors'
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      description: Id of the user
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    ChannelValue:
+      type: object
+      required:
+        - id
+        - fullValue
+      properties:
+        id:
+          type: string
+          format: uuid
+        fullValue:
+          type: string
+    Channel:
+      type: object
+      required:
+        - id
+        - name
+        - obfuscatedValue
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        obfuscatedValue:
+          type: string
+        validateChannel:
+          type: boolean
+          description: 'default: false, when this validateChannel is true, UI must ask for the full value such as full email or the full phone number. This value needs to be presented in the body of sendOTP API request. The server will valiadte the channel name and send the OTP only if the channel ID works.'
+    OTPSession:
+      type: object
+      description: 'An OTP session with all channels supported that user can choose from.'
+      required:
+        - id
+        - channels
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 'an ID generated for this new OTP session.'
+        channels:
+          type: array
+          description: 'List of channels that are supported'
+          items:
+            $ref: '#/components/schemas/Channel'

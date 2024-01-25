@@ -1,0 +1,31 @@
+scenarios:
+  loginauth:
+    ttl: 100
+    keywithalpha: false
+    numattempts: 2
+    allowemail: true
+    allowtext: true
+    allowwhatsapp: true
+    leadingtext: "boo-"
+  pwdreset:
+    ttl: 100
+    keywithalpha: false
+    numattempts: 2
+    allowemail: true
+    allowtext: true
+    leadingtext: "pwd-"
+mongostores:
+  id: "018d0df5-a50d-7017-883b-8431e708d4b2"
+  connectionurlenv: "MONGO_URL"
+phonestorecfg:
+  storetype: "mongo"
+  storeid: "018d0df5-a50d-7017-883b-8431e708d4b2"
+twilioconfig:
+  accountidenv: TWILIO_ACCT_SID
+  authtokenenv: TWILIO_AUTH_TOKEN
+  phonenumber: +18885551212
+emailconfig:
+  mailserver: smtp.google.com
+  port: 587
+  user: testuser@caluxor.com
+  passwordenv: MAIL_PASSWORD
