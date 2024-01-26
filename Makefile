@@ -6,7 +6,7 @@ server:
 	cd ..
 
 build:
-	go build -o bin/ ...
+	mkdir -p bin && go build -o ./bin ./...
 
 dep: api util store comms
 
@@ -18,3 +18,15 @@ clean:
 
 distclean: clean
 	go clean -cache -modcache -i -r
+
+
+listupgrades:
+	go list -u -m all
+
+doupgrades:
+	go get -u ./...
+	go get -t -u ./...
+
+# test everything
+testalldep:
+	go test all
