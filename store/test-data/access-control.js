@@ -12,4 +12,5 @@ db.createUser(
 )
 
 
-db.createUser({user: "myUserAdmin", pwd: passwordPrompt(), roles: ["dbAdmin"], mechanisms: ["SCRAM-SHA-1"]})
+db.createUser({user: "appuser", pwd: passwordPrompt(), roles: [{ role: "readWrite", db: "test" }], mechanisms: ["SCRAM-SHA-1"]})
+db.createUser({user: "rouser", pwd: passwordPrompt(), roles: [{ role: "read", db: "test" }], mechanisms: ["SCRAM-SHA-1"]})

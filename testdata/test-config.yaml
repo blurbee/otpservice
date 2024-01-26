@@ -23,7 +23,7 @@ scenarios:
     leadingtext: "pwd-"
 mongostores:
   - id: "018d0df5-a50d-7017-883b-8431e708d4b2"
-    database: "projects"
+    database: "test"
     collection: "users"
     connectionurlenv: "MONGO_URL"
 twilioconfig:

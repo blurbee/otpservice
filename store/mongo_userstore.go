@@ -65,7 +65,7 @@ func InitMongo(cfg *util.Config) (err api.StatusCode) {
 		// Check the connection
 		er = m.client.Ping(context.Background(), nil)
 		if er != nil {
-			util.Error("Unable to connect to Mongo:", er)
+			util.Error("Mongo connected but ping failed:", er)
 			err = api.CONN_FAILED
 			return
 		}
