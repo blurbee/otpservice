@@ -12,6 +12,8 @@ package server
 import (
 	"net/http"
 
+	"github.com/blurbee/otpserver/api"
+	"github.com/blurbee/otpserver/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -60,6 +62,17 @@ type ApiHandleFunctions struct {
 
 	// Routes for the DefaultAPI part of the API
 	DefaultAPI OTPServerAPI
+	config     *util.Config
+}
+
+func Init(cfg *util.Config) (ApiHandleFunctions, api.StatusCode) {
+	if cfg == nil {
+		return ApiHandleFunctions{}, api.CONFIG_ERROR
+	}
+
+	return ApiHandleFunctions{
+		config: cfg,
+	}, api.OK
 }
 
 func getRoutes(handleFunctions ApiHandleFunctions) []Route {

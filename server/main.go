@@ -11,19 +11,39 @@ package main
 
 import (
 	"log"
+	"os"
 
 	// WARNING!
 	// Pass --git-repo-id and --git-user-id properties when generating the code
 	//
-	sw "github.com/GIT_USER_ID/GIT_REPO_ID/go"
+	"github.com/blurbee/otpserver/api"
+	svr "github.com/blurbee/otpserver/server/go"
+	getopt "github.com/pborman/getopt/v2"
 )
 
+var cfgFile string
+var routes svr.ApiHandleFunctions
+
+func init() {
+
+	getopt.Flag(&cfgFile, 'c', "config", "config file")
+	cfg, err := InitEnvironment(cfgFile)
+	if err != api.OK {
+		log.Fatal("InitEnvironment failed")
+		os.Exit(-1)
+	}
+	routes, err = svr.Init(cfg)
+	if err != api.OK {
+		log.Fatal("Init failed")
+		os.Exit(-1)
+	}
+}
+
 func main() {
-	routes := sw.ApiHandleFunctions{}
 
 	log.Printf("Server started")
 
-	router := sw.NewRouter(routes)
+	router := svr.NewRouter(routes)
 
 	log.Fatal(router.Run(":8080"))
 }

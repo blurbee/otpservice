@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"strings"
 
-	"caluxor.com/api"
-	"caluxor.com/util"
+	"github.com/blurbee/otpserver/api"
+	"github.com/blurbee/otpserver/util"
 )
 
 type twilioSender struct {

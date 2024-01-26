@@ -4,9 +4,8 @@ import (
 	"context"
 	"time"
 
-	"caluxor.com/api"
-	"caluxor.com/util"
-
+	"github.com/blurbee/otpserver/api"
+	"github.com/blurbee/otpserver/util"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

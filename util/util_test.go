@@ -5,13 +5,13 @@ import (
 	"testing"
 	"unicode"
 
-	. "caluxor.com/api"
+	"github.com/blurbee/otpserver/api"
 )
 
 func TestObfuscateEmail(t *testing.T) {
 	input := "xyz@gmail.com"
 	output, err := ObfuscateEmail(input)
-	if err != OK || output != "x***z@gmail.com" {
+	if err != api.OK || output != "x***z@gmail.com" {
 		t.Log("obfuscation failed")
 		t.Fail()
 	}
@@ -20,7 +20,7 @@ func TestObfuscateEmail(t *testing.T) {
 func TestObfuscateEmailWithBadInput(t *testing.T) {
 	input := "aotan"
 	_, err := ObfuscateEmail(input)
-	if err == OK {
+	if err == api.OK {
 		t.Log("failure case failed")
 		t.Fail()
 	}

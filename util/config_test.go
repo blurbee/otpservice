@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	. "caluxor.com/api"
+	"github.com/blurbee/otpserver/api"
 )
 
 var cfg Config
@@ -28,7 +28,7 @@ func TestLoadBadConfig(t *testing.T) {
 	}
 	defer f.Close()
 	err = LoadConfig(f, &cfg)
-	if err == OK {
+	if err == api.OK {
 		t.Fatal("load bad config failed", err)
 	}
 }
@@ -42,13 +42,13 @@ func TestLoadConfig(t *testing.T) {
 	}
 	defer f.Close()
 	err = LoadConfig(f, &cfg)
-	if err != OK {
+	if err != api.OK {
 		fmt.Println("load config failed", err)
 		os.Exit(-1)
 	}
 
 	s, err := cfg.GetScenario("loginauth")
-	if err != OK {
+	if err != api.OK {
 		Debug(s)
 		t.Fatal("load config failed", err)
 	}
@@ -59,7 +59,7 @@ func TestLoadConfig(t *testing.T) {
 	}
 
 	s, err = cfg.GetScenario("pwdreset")
-	if err != OK {
+	if err != api.OK {
 		t.Fatal("load config failed", err)
 	}
 

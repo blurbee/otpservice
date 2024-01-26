@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"caluxor.com/api"
-	"caluxor.com/util"
+	"github.com/blurbee/otpserver/api"
+	"github.com/blurbee/otpserver/util"
 	"github.com/redis/go-redis/v9"
 )
 

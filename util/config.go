@@ -5,8 +5,7 @@ import (
 	"log"
 	"os"
 
-	"caluxor.com/api"
-
+	"github.com/blurbee/otpserver/api"
 	"gopkg.in/yaml.v3"
 )
 

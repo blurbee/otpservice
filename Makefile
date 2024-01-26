@@ -15,3 +15,6 @@ api util store comms:
 
 clean:
 	rm -rf bin/
+
+distclean: clean
+	go clean -cache -modcache -i -r

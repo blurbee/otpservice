@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"caluxor.com/api"
+	"github.com/blurbee/otpserver/api"
 	"github.com/google/uuid"
 )
 

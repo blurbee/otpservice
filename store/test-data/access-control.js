@@ -10,3 +10,6 @@ db.createUser(
     ]
   }
 )
+
+
+db.createUser({user: "myUserAdmin", pwd: passwordPrompt(), roles: ["dbAdmin"], mechanisms: ["SCRAM-SHA-1"]})

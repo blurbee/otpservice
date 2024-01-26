@@ -5,14 +5,11 @@ import (
 	"os"
 	"testing"
 
-	"caluxor.com/api"
-	"caluxor.com/util"
+	"github.com/blurbee/otpserver/api"
+	"github.com/blurbee/otpserver/util"
 )
 
 func TestInitMongo(t *testing.T) {
-
-	// t.Setenv("MONGO_URL", "mongodb://admin:blueh5ashMy%24test@localhost:27017/projects")
-
 	util.InitLogs()
 	file := "../testdata/test-config.yaml"
 	f, err := os.Open(file)
@@ -35,8 +32,6 @@ func TestInitMongo(t *testing.T) {
 }
 
 func TestGetAttribute(t *testing.T) {
-	// t.Setenv("MONGO_URL", "mongodb://admin:blueh5ashMy%24test@localhost:27017/projects")
-
 	util.InitLogs()
 	file := "../testdata/test-config.yaml"
 	f, err := os.Open(file)
