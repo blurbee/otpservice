@@ -1,17 +1,14 @@
-secretsfile: "./testdata/.secrets.yaml"
+secretsfile: "./config/.secrets.yaml"
 scenarios:
+  # login scenario
   loginauth:
     ttl: 100
     keywithalpha: false
     numattempts: 2
-    allowemail: true
     allowtext: true
-    allowwhatsapp: false
-    leadingtext: "boo-"
+# uncomment line below if you want a leading text to be added to the OTP string.
+#    leadingtext: "boo-"
     phonestorecfg:
-      storetype: "mongo"
-      storeid: "018d0df5-a50d-7017-883b-8431e708d4b2"
-    emailstorecfg:
       storetype: "mongo"
       storeid: "018d0df5-a50d-7017-883b-8431e708d4b2"
   pwdreset:
@@ -23,15 +20,10 @@ scenarios:
     leadingtext: "pwd-"
 mongostores:
   - id: "018d0df5-a50d-7017-883b-8431e708d4b2"
-    database: "projects"
-    collection: "users"
+    database: <DATABASE NAME>
+    collection: <COLLECTION NAME>
     connectionurlenv: "MONGO_URL"
 twilioconfig:
   accountidenv: TWILIO_ACCT_SID
   authtokenenv: TWILIO_AUTH_TOKEN
-  phonenumber: +18885039881
-emailserverconfig:
-  mailserver: smtp.google.com
-  port: 587
-  user: testuser@caluxor.com
-  passwordenv: MAIL_PASSWORD
+  phonenumber: <TWILIO PHONE NUMBER>

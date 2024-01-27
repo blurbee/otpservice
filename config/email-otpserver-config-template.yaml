@@ -1,12 +1,10 @@
-secretsfile: "./testdata/.secrets.yaml"
+secretsfile: "./config/.secrets.yaml"
 scenarios:
   loginauth:
     ttl: 100
-    keywithalpha: false
+    keywithalpha: true
     numattempts: 2
     allowemail: true
-    allowtext: true
-    allowwhatsapp: false
     leadingtext: "boo-"
     phonestorecfg:
       storetype: "mongo"
@@ -23,15 +21,11 @@ scenarios:
     leadingtext: "pwd-"
 mongostores:
   - id: "018d0df5-a50d-7017-883b-8431e708d4b2"
-    database: "projects"
-    collection: "users"
+    database: <DATABASE NAME>
+    collection: <COLLECTION NAME>
     connectionurlenv: "MONGO_URL"
-twilioconfig:
-  accountidenv: TWILIO_ACCT_SID
-  authtokenenv: TWILIO_AUTH_TOKEN
-  phonenumber: +18885039881
 emailserverconfig:
-  mailserver: smtp.google.com
-  port: 587
-  user: testuser@caluxor.com
+  mailserver: <SMTP SERVER e.g. smtp.google.com>
+  port: <SMTP PORT e.g. 587>
+  user: <SMTP USER>
   passwordenv: MAIL_PASSWORD

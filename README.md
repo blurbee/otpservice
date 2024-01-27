@@ -9,8 +9,16 @@ The one-time password (aka otp) is a common service used by many systems as a so
 
 The project is an open-source otp service built in Golang and uses redis to manage tokens in the backend. The user information such as email, phone, text is fetched from a user store. Currently mongo and postgres are supported as user stores.
 
-Configuration
-Scenario configuration
+# Getting started
+1. Get the source git https://github.com/blurbee/otpservice.git
+1. Use one of the configuration templates under `config` directory.
+2. Substitute all properties in `<>` with appropriate values.
+3. Create secrets.yaml with keys. MONGO_URL, MAIL_PASSWORD, are examples. The `secrets-template.yaml` has the list of keys that could be configured.
+4. Run make img
+
+
+## Configuration
+### Scenario configuration
 Given the variety of use cases in which OTP is used, the servic provides configuartion capability that can be used for specfic scenario. The configuration of each scenario can specify one of the following:
 - key characteristics (length/character domain)
 - key TTL (in seconds)
@@ -18,10 +26,24 @@ Given the variety of use cases in which OTP is used, the servic provides configu
 - number of attempts to validate the OTP before it expires
 - pre-key static tex
 
-Each scenario is identified by the scenarioid and is presented at the time of session creation.
+The configuration is designed to support extensibility to support multi-tenancy. The scenarios may be defined for any number of tenants. The plan is to implement configuration APIs and moving configuration into a database that will allow dynamic addition of new tenants.
 
-User store configuration
+Each scenario also identifies the user stores for properties such as phone, email, text or whatsapp. Given that each proprety can be defined separately, the service allows situations where these properties may be stores in different databases or different reconds in the same database. The `phonestoreconfig`, `emailstorecfg`, `whatsappstorecfg` each define which database connection should be used to retrieve the value for a given scenario.
 
+### Database connections
+Databases are configured in one of two lists: `mongostores` and `postgresstores`. These two are lists of connection parameters.
+
+### Secrets
+Properties such as user name and password for connecting to databases, redis, etc are stored in secrets file. The secrets file location is specified by `secretsfile`.
+
+### Communication configuration
+All outbound communications properties such as email, text and whatsapp are defined in `emailserverconfig`, `twilioconfig`, `phoneconfig` and `whatsappmsg`.
+
+
+# Extensibility
+
+
+Each scenario is identified by the scenarioid as defined in the config file. When a OTP sesion is required, the createOTPSession is called with the appropriate scenarioid.
 
 This service has APIs to:
 - create an OTP session based on pre-configured "scenario".
