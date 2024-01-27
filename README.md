@@ -41,9 +41,24 @@ All outbound communications properties such as email, text and whatsapp are defi
 
 
 # Extensibility
+The service is designed with key components as interfaces. Access of user data, transient storage of OTP keys, dispatching OTP can be swapped.
 
+# How it works
+Each scenario is identified by the scenarioid as defined in the config file. The following sequence diagram shows the process.
 
-Each scenario is identified by the scenarioid as defined in the config file. When a OTP sesion is required, the createOTPSession is called with the appropriate scenarioid.
+`
+title This is a title
+
+User->Application:User enters a flow that requries OTP
+Application-->OTPServer:The App calls createOTPSession \n scenarioid(login/email-verification)
+OTPServer->Application: return sessionid, channels
+Application->User: Provide choice of how to receive OTP (channels)
+User->Application: sendOTP(selected channel)
+Application->OTPServer: sendOTP(ch, optional: channelValue)
+`
+
+UI componnt 
+OTP sesion is required, the createOTPSession is called with the appropriate scenarioid.
 
 This service has APIs to:
 - create an OTP session based on pre-configured "scenario".
